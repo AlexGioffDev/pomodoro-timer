@@ -1,24 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pomodoro Timer!</title>
     <link rel="stylesheet" href="./assets/style.css">
 </head>
+
 <body>
     <h1>Pomodoro Timer</h1>
-    <div>
+    <div id="container-buttons">
         <button id="focus-status">FOCUS</button>
         <button id="break-status">BREAK</button>
         <button id="longBreak-status">LONG BREAK</button>
     </div>
 
-    <div>
-        <h2 id="focus-timer">25</h2>
-        <h2 id="break-timer">5</h2>
-        <h2 id="longBreak-timer">30</h2>
-    </div>
-<script src="./assets/main.js"></script>
+    <main>
+        <div id="container-changes">
+            <div id="focus-container">
+                <h2 id="focus-timer" data-min="25" data-key="focus">25</h2>
+                <button class="increment" data-target="focus-timer">+</button>
+                <button class="decrement" data-target="focus-timer">-</button>
+            </div>
+            <div id="break-container">
+                <h2 id="break-timer" data-min="5" data-key="break">5</h2>
+                <button class="increment" data-target="break-timer">+</button>
+                <button class="decrement" data-target="break-timer">-</button>
+            </div>
+            <div id="longBreak-container">
+                <h2 id="longBreak-timer" data-min="30" data-key="longBreak">30</h2>
+                <button class="increment" data-target="longBreak-timer">+</button>
+                <button class="decrement" data-target="longBreak-timer">-</button>
+            </div>
+        </div>
+        <div id="container-countdown">
+            <h2 id="minutes"></h2>
+            <h2 id="seconds"></h2>
+        </div>
+
+
+        <button id="play">start</button>
+        <button id="stop">pause</button>
+        <button id="reset">reset</button>
+    </main>
+    <script src="./assets/main.js"></script>
 </body>
+
 </html>
