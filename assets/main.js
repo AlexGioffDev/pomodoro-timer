@@ -40,7 +40,7 @@ const state = {
 // -------------------------
 document.addEventListener("DOMContentLoaded", () => {
   showMode("focus");
-  containerBtns.style.display = "block";
+  containerBtns.style.display = "flex";
   containerChanges.style.display = "block";
   containerCountdwn.style.display = "none";
 });
@@ -59,7 +59,7 @@ function setMode(mode) {
 }
 
 function showMode(mode) {
-  focusComponent.style.display = mode === "focus" ? "block" : "none";
+  focusComponent.style.display = mode === "focus" ? "flex" : "none";
   breakComponent.style.display = mode === "break" ? "block" : "none";
   longBreakComponent.style.display = mode === "longBreak" ? "block" : "none";
 }

@@ -5,44 +5,90 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pomodoro Timer!</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="./assets/style.css">
 </head>
 
 <body>
-    <h1>Pomodoro Timer</h1>
-    <div id="container-buttons">
-        <button id="focus-status">FOCUS</button>
-        <button id="break-status">BREAK</button>
-        <button id="longBreak-status">LONG BREAK</button>
-    </div>
-
-    <main>
-        <div id="container-changes">
-            <div id="focus-container">
-                <h2 id="focus-timer" data-min="25" data-key="focus">25</h2>
-                <button class="increment" data-target="focus-timer">+</button>
-                <button class="decrement" data-target="focus-timer">-</button>
-            </div>
-            <div id="break-container">
-                <h2 id="break-timer" data-min="5" data-key="break">5</h2>
-                <button class="increment" data-target="break-timer">+</button>
-                <button class="decrement" data-target="break-timer">-</button>
-            </div>
-            <div id="longBreak-container">
-                <h2 id="longBreak-timer" data-min="30" data-key="longBreak">30</h2>
-                <button class="increment" data-target="longBreak-timer">+</button>
-                <button class="decrement" data-target="longBreak-timer">-</button>
-            </div>
-        </div>
-        <div id="container-countdown">
-            <h2 id="minutes"></h2>
-            <h2 id="seconds"></h2>
+    <main class="container">
+        <h1>Pomodoro Timer</h1>
+        <div id="container-buttons">
+            <button id="focus-status" class="btn-active">FOCUS</button>
+            <button id="break-status">BREAK</button>
+            <button id="longBreak-status">LONG BREAK</button>
         </div>
 
+        <div>
+            <div id="container-changes">
+                <div class="container-time" id="focus-container">
+                    <h2 id="focus-timer" data-min="25" data-key="focus">25</h2>
+                    <button class="increment" data-target="focus-timer">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.2"
+                            stroke="currentColor" class="icon">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                        </svg>
 
-        <button id="play">start</button>
-        <button id="stop">pause</button>
-        <button id="reset">reset</button>
+                    </button>
+                    <button class="decrement" data-target="focus-timer">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="icon">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M15 12H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" class="icon" />
+                        </svg>
+
+                    </button>
+                </div>
+                <div class="container-time" id="break-container">
+                    <h2 id="break-timer" data-min="5" data-key="break">5</h2>
+                    <button class="increment" data-target="break-timer">+</button>
+                    <button class="decrement" data-target="break-timer">-</button>
+                </div>
+                <div class="container-time" id="longBreak-container">
+                    <h2 id="longBreak-timer" data-min="30" data-key="longBreak">30</h2>
+                    <button class="increment" data-target="longBreak-timer">+</button>
+                    <button class="decrement" data-target="longBreak-timer">-</button>
+                </div>
+            </div>
+            <div id="container-countdown">
+                <h2 id="minutes"></h2>
+                <h2 id="seconds"></h2>
+            </div>
+
+
+
+        </div>
+        <div class="container-start">
+
+            <button id="stop">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                    class="icon-start stop-icon">
+                    <path fill-rule="evenodd"
+                        d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12ZM9 8.25a.75.75 0 0 0-.75.75v6c0 .414.336.75.75.75h.75a.75.75 0 0 0 .75-.75V9a.75.75 0 0 0-.75-.75H9Zm5.25 0a.75.75 0 0 0-.75.75v6c0 .414.336.75.75.75H15a.75.75 0 0 0 .75-.75V9a.75.75 0 0 0-.75-.75h-.75Z"
+                        clip-rule="evenodd" />
+                </svg>
+            </button>
+            <button id="play">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                    class="icon-start play-icon">
+                    <path fill-rule="evenodd"
+                        d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm14.024-.983a1.125 1.125 0 0 1 0 1.966l-5.603 3.113A1.125 1.125 0 0 1 9 15.113V8.887c0-.857.921-1.4 1.671-.983l5.603 3.113Z"
+                        clip-rule="evenodd" />
+                </svg>
+            </button>
+            <button id="reset">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                    class="icon-start reset-icon">
+                    <path fill-rule="evenodd"
+                        d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm14.024-.983a1.125 1.125 0 0 1 0 1.966l-5.603 3.113A1.125 1.125 0 0 1 9 15.113V8.887c0-.857.921-1.4 1.671-.983l5.603 3.113Z"
+                        clip-rule="evenodd" />
+                </svg>
+            </button>
+        </div>
     </main>
     <script src="./assets/main.js"></script>
 </body>
