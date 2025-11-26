@@ -1,199 +1,202 @@
-// -------------------------
-// ELEMENTI UI
-// -------------------------
-const focusComponent = document.getElementById("focus-container");
-const breakComponent = document.getElementById("break-container");
-const longBreakComponent = document.getElementById("longBreak-container");
+// Variables and constant
+const btns = document.querySelectorAll(".btn");
+const btnsIncrement = document.querySelectorAll(".increment");
+const btnsDecrement = document.querySelectorAll(".decrement");
+const minutesText = document.getElementById("minutes");
+const secondsText = document.getElementById("seconds");
+let countdownEle = document.getElementById("countdown");
+let buttonsContainer = document.querySelector(".buttons-container");
+const circles = document.getElementsByClassName("circle");
 
-const containerBtns = document.getElementById("container-buttons");
-const containerChanges = document.getElementById("container-changes");
-const containerCountdwn = document.getElementById("container-countdown");
+// start buttons
+const startBtn = document.getElementById("startBtn");
+const pauseBtn = document.getElementById("pauseBtn");
+const resetBtn = document.getElementById("resetBtn");
 
-const minsText = document.getElementById("minutes");
-const secText = document.getElementById("seconds");
-
-const focusBtn = document.getElementById("focus-status");
-const breakBtn = document.getElementById("break-status");
-const longBreakBtn = document.getElementById("longBreak-status");
-
-const playButton = document.getElementById("play");
-const stopBtn = document.getElementById("stop");
-const resetBtn = document.getElementById("reset");
-
-// -------------------------
-// VARIABILI GLOBALI
-// -------------------------
-let interval = null;
-let totalSeconds = 0;
-
-const state = {
-  pre: "focus",
-  active: "focus",
-  focus: 1,
-  break: 1,
-  longBreak: 30,
+let state = {
+  preValue: "focus",
+  value: "focus",
   count: 0,
 };
 
-// -------------------------
-// INIT
-// -------------------------
-document.addEventListener("DOMContentLoaded", () => {
-  showMode("focus");
-  containerBtns.style.display = "flex";
-  containerChanges.style.display = "block";
-  containerCountdwn.style.display = "none";
-});
+let interval = null;
+let totalSeconds = 0;
 
-// -------------------------
-// CAMBIO MODALITÀ
-// -------------------------
-focusBtn.addEventListener("click", () => setMode("focus"));
-breakBtn.addEventListener("click", () => setMode("break"));
-longBreakBtn.addEventListener("click", () => setMode("longBreak"));
-
-function setMode(mode) {
-  state.pre = state.active;
-  state.active = mode;
-  showMode(mode);
-}
-
-function showMode(mode) {
-  focusComponent.style.display = mode === "focus" ? "flex" : "none";
-  breakComponent.style.display = mode === "break" ? "block" : "none";
-  longBreakComponent.style.display = mode === "longBreak" ? "block" : "none";
-}
-
-// -------------------------
-// INCREMENTI / DECREMENTI
-// -------------------------
-document.querySelectorAll(".increment").forEach((btn) => {
-  btn.addEventListener("click", (e) => {
-    e.preventDefault();
-    const target = document.getElementById(btn.dataset.target);
-    const key = target.dataset.key;
-
-    state[key]++;
-    target.innerText = state[key];
-  });
-});
-
-document.querySelectorAll(".decrement").forEach((btn) => {
-  btn.addEventListener("click", (e) => {
-    e.preventDefault();
-    const target = document.getElementById(btn.dataset.target);
-    const key = target.dataset.key;
-    const min = parseInt(target.dataset.min);
-
-    if (state[key] > min) {
-      state[key]--;
-      target.innerText = state[key];
-    }
-  });
-});
-
-// -------------------------
-// PLAY
-// -------------------------
-playButton.addEventListener("click", (e) => {
+startBtn.addEventListener("click", (e) => {
   e.preventDefault();
 
-  // Evita doppio intervallo
-  if (interval !== null) return;
+  let timerActiveEle = document.querySelector(".timer-active");
+  timerActiveEle.classList.remove("timer-active");
+  countdownEle.classList.add("timer-active");
 
-  // Se cambio modalità o totalSeconds è 0 → ricalcolo
-  if (totalSeconds === 0 || state.pre !== state.active) {
-    totalSeconds = state[state.active] * 60;
+  buttonsContainer.classList.add("buttons-hiden");
+
+  if (state.value !== "pause") {
+    if (interval) return;
+
+    let valueElement = parseInt(
+      document.getElementById(`focus-value`).innerHTML
+    );
+
+    totalSeconds = valueElement * 60;
+  } else {
+    state.value = state.preValue;
   }
+  startCountdown();
 
-  // Mostra countdown
-  containerBtns.style.display = "none";
-  containerChanges.style.display = "none";
-  containerCountdwn.style.display = "block";
-
-  // Aggiorna subito senza delay
-  updateDisplay();
-
-  // Avvia timer
   interval = setInterval(() => {
-    if (totalSeconds <= 0) {
-      handleEndOfCycle();
-      return;
-    }
-
     totalSeconds--;
-    updateDisplay();
+    if (totalSeconds == 0) {
+      switch (state.value) {
+        case "focus":
+          state.count++;
+          updateCircle();
+          changeState();
+          state.preValue = "focus";
+
+          if (state.value === "break") {
+            totalSeconds = parseInt(
+              document.getElementById("break-value").innerHTML * 60
+            );
+          } else if (state.value === "longBreak") {
+            totalSeconds = parseInt(
+              document.getElementById("longBreak-value").innerHTML * 60
+            );
+          }
+          // Rimosso il blocco else { reset(); return; }
+          break;
+
+        case "break":
+          state.preValue = "break";
+          changeState(); // -> state.value = "focus"
+          totalSeconds = parseInt(
+            document.getElementById("focus-value").innerHTML * 60
+          );
+          break;
+
+        case "longBreak":
+          state.preValue = "longBreak"; // Non strettamente necessario qui, ma non fa male
+          reset();
+          return; // FERMA L'INTERVALLO E IL CICLO SUBITO DOPO IL RESET
+      }
+    }
+    startCountdown();
   }, 1000);
 });
 
-// -------------------------
-// STOP (PAUSA)
-// -------------------------
-stopBtn.addEventListener("click", (e) => {
-  e.preventDefault();
-  if (interval !== null) {
-    clearInterval(interval);
-    interval = null;
-  }
+pauseBtn.addEventListener("click", () => {
+  clearInterval(interval);
+  state.value = "pause";
 });
 
-// -------------------------
-// RESET
-// -------------------------
-resetBtn.addEventListener("click", (e) => {
-  e.preventDefault();
+resetBtn.addEventListener("click", () => {
   reset();
 });
+
+/**
+ * Function that change the value of the state
+ */
+function changeState() {
+  switch (state.value) {
+    case "focus":
+      if(state.count === 4)
+      {
+        state.value = "longBreak";
+      } else {
+        state.value = "break";
+      }
+      break;
+    case "break":
+      state.value = "focus";
+      break;
+    case "longBreak":
+      state.value = "focus";
+      break;
+  }
+}
+
+function updateCircle() {
+  Array.from(circles).forEach((el, index) => {
+    if (index < state.count) {
+      el.classList.add("circle-full");
+    } else {
+      return;
+    }
+  });
+}
+
+function startCountdown() {
+  minutesText.innerText = Math.floor(totalSeconds / 60)
+    .toString()
+    .padStart(2, "0");
+  secondsText.innerText = Math.floor(totalSeconds % 60)
+    .toString()
+    .padStart(2, "0");
+}
+
+btnsIncrement.forEach((btn) => {
+  btn.addEventListener("click", (e) => {
+    e.preventDefault();
+    const dataTarget = e.currentTarget.dataset["key"];
+    const target = document.getElementById(`${dataTarget}-value`);
+    const newValue = parseInt(target.innerText) + 1;
+    target.innerText = newValue;
+  });
+});
+
+btnsDecrement.forEach((btn) => {
+  btn.addEventListener("click", (e) => {
+    e.preventDefault();
+    const dataTarget = e.currentTarget.dataset["key"];
+    const target = document.getElementById(`${dataTarget}-value`);
+    let newValue = parseInt(target.innerText) - 1;
+    if (newValue < 1) newValue = 1;
+    target.innerText = newValue;
+  });
+});
+
+for (let btn of btns) {
+  btn.addEventListener("click", (e) => {
+    const active = document.querySelector(".btn-active");
+    if (active) active.classList.remove("btn-active");
+
+    e.preventDefault();
+    const idTarget = e.target.dataset["name"];
+    let targetTimer = document.getElementById(`${idTarget}-target`);
+    const timerActive = document.querySelector(".timer-active");
+    if (timerActive) timerActive.classList.remove("timer-active");
+    targetTimer.classList.add("timer-active");
+    e.target.classList.add("btn-active");
+  });
+}
 
 function reset() {
   clearInterval(interval);
   interval = null;
 
+  state = { preValue: "focus", value: "focus", count: 0 };
   totalSeconds = 0;
-  state.pre = state.active;
-  state.active = "focus";
-  state.count = 0;
 
-  showMode("focus");
+  document.getElementById("focus-value").innerText = 25;
+  document.getElementById("break-value").innerText = 5;
+  document.getElementById("longBreak-value").innerText = 30;
 
-  containerBtns.style.display = "block";
-  containerChanges.style.display = "block";
-  containerCountdwn.style.display = "none";
-}
+  document
+    .querySelectorAll(".timer-active")
+    .forEach((el) => el.classList.remove("timer-active"));
 
-// -------------------------
-// UPDATE UI COUNTDOWN
-// -------------------------
-function updateDisplay() {
-  let minutes = Math.floor(totalSeconds / 60);
-  let seconds = totalSeconds % 60;
+  document.getElementById("focus-target").classList.add("timer-active");
 
-  minsText.innerText = minutes;
-  secText.innerText = seconds.toString().padStart(2, "0");
-}
+  buttonsContainer.classList.remove("buttons-hiden");
+  document
+    .querySelectorAll(".btn-active")
+    .forEach((el) => el.classList.remove("btn-active"));
+  btns[0].classList.add("btn-active");
 
-// -------------------------
-// LOGICA CICLO (focus → break → longBreak → reset)
-// -------------------------
-function handleEndOfCycle() {
-  if (state.active === "focus") {
-    state.pre = "focus";
-    state.active = "break";
-    totalSeconds = state.break * 60;
-  } else if (state.active === "break") {
-    state.count++;
-    if (state.count >= 4) {
-      state.pre = "break";
-      state.active = "longBreak";
-      totalSeconds = state.longBreak * 60;
-    } else {
-      state.pre = "break";
-      state.active = "focus";
-      totalSeconds = state.focus * 60;
-    }
-  } else {
-    reset();
-  }
+  Array.from(circles).forEach((circle) =>
+    circle.classList.remove("circle-full")
+  );
 
-  updateDisplay();
+  minutesText.innerText = ""
+  secondsText.innerText = "";
 }

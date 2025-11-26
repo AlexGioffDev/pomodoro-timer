@@ -15,6 +15,7 @@
 
 html {
     font-size: 62.5%;
+    overflow: hidden;
 }
 
 body {
@@ -25,146 +26,206 @@ body {
     background-color: var(--primary-color, #26547C);
 }
 
-main {
-    margin-top: 10rem;
+.container {
     max-width: 1024px;
     width: 100vw;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 4rem;
-
-    h1 {
-        font-size: 3.2rem;
-        text-transform: uppercase;
-        color: var(--accent-color)
-    }
+    padding: 3rem;
+    height: 100vh;
 }
 
-#container-buttons {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 3rem;
-    width: 40rem;
-
-    button {
-        border: none;
-        outline: none;
-        background-color: transparent;
-        font-size: 1.9rem;
-        font-weight: 300;
-        transition: all .5s ease-in;
-
-        &.btn-active,
-        &:hover {
-            font-weight: 600;
-            font-size: 2rem;
-            color: var(--accent-color);
-            transition: all .5s ease-in;
-        }
-
-
-    }
-}
-
-.container-time {
+.header
+{
+    width: 100%;
+    color: var(--accent-color);
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    gap: 2rem;
-    position: relative;
-    transition: all 0.5s ease-in;
-
-    h2 {
-        width: 20rem;
-        height: 20rem;
-        border: 4px solid #fff;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 100%;
-        font-size: 8rem;
-        color: #fff;
-        padding: 5rem;
-
+    gap: 1rem;
+    h1 {
+        font-weight: 700;
+        font-size: 2.8rem;
     }
-
-
-    button.increment,
-    button.decrement {
-        position: absolute;
-
-        border: none;
-        outline: none;
-        font-size: 3rem;
-        background: transparent;
-
-        .icon {
-            width: 90px;
-            height: 90px;
-            color: #fff;
-        }
+    h3{
+        text-transform: capitalize;
+        font-size: 1.9rem;
     }
-
-    button.increment {
-        right: -50px;
-        bottom: -60px;
-    }
-
-    button.decrement {
-        bottom: -60px;
-        left: -50px;
-    }
-
 }
 
 
-.container-start
+.buttons-container
 {
-    margin-top: 8rem;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
-    button
-    {
+    gap: 10px;
+
+    button {
+        background: transparent;
         border: none;
         outline: none;
-        background: transparent;
+        font-size: 1.8rem;
+        font-weight: 500;
+        transition: all .5s ease-in;
+
+        &.btn-active,
+        &:hover {
+            cursor: pointer;
+            font-size: 2rem;
+            color: var(--accent-color);
+            font-weight: 700;
+            transition: all .5s ease-in;
+        }
+    }
+}
+
+.container-timers
+{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    position: relative;
+    height: 27rem;
+
+    .container-timer {
+        position: absolute;
+        opacity: 0;
+        transition: all 0.5s ease-in;
+        display: flex;
+        flex-direction: column;
+                visibility: hidden;
+                    pointer-events: none;
+
+        .timer-border
+        {
+            width: 20rem;
+            height: 20rem;
+            border: 10px solid #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 100%;
+
+            h3 {
+                font-size: 3rem;
+                color: #fff;
+                font-weight: bold;
+            }
+        }
+
+        button {
+            background: transparent;
+            outline: none;
+            border: none;
+            .icon-btn{
+                color: #fff;
+                width: 8rem;
+                height: 8rem;
+                position: absolute;
+                bottom: -8rem;
+            }
+
+            .icon-increment{
+                left: -5rem
+            }
+
+            .icon-decrement{
+                right: -5rem;
+            }
+        }
+
+
+    }
+    .container-timer.timer-active {
+        opacity: 1;
+        transition: all 0.5s ease-in;
+        visibility: visible;
+        pointer-events: auto;
     }
 }
 
 
-.icon-start
-{
-    width: 13rem;
-}
 
-.play-icon {
+.start-buttons {
+    display: flex;
+    gap: 0.4rem;
+    justify-items: center;
+    align-items: center;
     position: relative;
-    top: -30px;
-    color: var(--accent-color);
+    button {
+        border-radius: 100%;
+        border: none;
+        outline: none;
+        background-color: transparent;
+        .icon-status{
+            color: var(--secondary-color, #FFD166);
+            width: 10rem;
+            height: 10rem;
+        }
+
+        .icon-play {
+            margin-top: -10rem;
+            color: var(--accent-color, #EF476F);
+            width: 12rem;
+            height: 12rem;
+        }
+
+        .icon-reset {
+            transform: rotate(180deg);
+        }
+    }
 }
 
-.stop-icon,
-.reset-icon
-{
-    color: var(--secondary-color);
+.countdown-container{
+    width: 20rem;
+    height: 20rem;
+    border-radius: 100%;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+    border: 8px solid #fff;
+
+    h3, span{
+        font-weight: 700;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        font-size: 3.4rem;
+        color: #fff;
+    }
 }
 
-.reset-icon
-{
-    transform: rotate(180deg);
-}
-
-
-.hidden
+.buttons-hiden
 {
     opacity: 0;
+    visibility: hidden;
     transition: all 0.5s ease-in;
+    height: 0;
+}
+
+.circles-container {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    justify-content: center;
+
+    .circle {
+        width: 4rem;
+        height: 4rem;
+        border: 2px solid #fff;
+        background-color: transparent;
+        border-radius: 100%;
+        transition: all 0.5s ease-in;
+
+        &.circle-full{
+            border-color: var(--secondary-color, #FFD166);
+            background-color: var(--secondary-color, #FFD166);
+            transition: all 0.5s ease-in;
+        }
+    }
 }

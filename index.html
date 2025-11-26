@@ -15,80 +15,171 @@
 
 <body>
     <main class="container">
-        <h1>Pomodoro Timer</h1>
-        <div id="container-buttons">
-            <button id="focus-status" class="btn-active">FOCUS</button>
-            <button id="break-status">BREAK</button>
-            <button id="longBreak-status">LONG BREAK</button>
+        <div class="header">
+            <h1>POMODORO TIMER</h1>
+            <h3>Ready to focus!</h3>
         </div>
 
-        <div>
-            <div id="container-changes">
-                <div class="container-time" id="focus-container">
-                    <h2 id="focus-timer" data-min="25" data-key="focus">25</h2>
-                    <button class="increment" data-target="focus-timer">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.2"
-                            stroke="currentColor" class="icon">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                        </svg>
+        <!-- BUTTONS STATUS CHANGE -->
+        <div class="buttons-container">
+            <button class="btn btn-active" id="btnFocus" data-name="focus">FOCUS</button>
+            <button class="btn" id="btnBreak" data-name="break">BREAK</button>
+            <button class="btn" id="btnLongBreak" data-name="longBreak">LONG BREAK</button>
+        </div>
 
-                    </button>
-                    <button class="decrement" data-target="focus-timer">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" class="icon">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M15 12H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" class="icon" />
-                        </svg>
+        <!-- TIMERS AND BUTTONS -->
+        <div class="container-timers">
+            <div class="container-timer timer-active" id="focus-target">
+                <div class="timer-border">
+                    <h3 id="focus-value">25</h3>
+                </div>
+                <button class="increment" data-key="focus">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="icon-btn icon-increment">
+                        <path fill-rule="evenodd"
+                            d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z"
+                            clip-rule="evenodd" />
+                    </svg>
 
-                    </button>
+                </button>
+                <button class="decrement" data-key="focus">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        class="icon-btn icon-decrement"
+                    >
+                        <path
+                            fill-rule="evenodd"
+                            d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm3 10.5a.75.75 0 0 0 0-1.5H9a.75.75 0 0 0 0 1.5h6Z"
+                            clip-rule="evenodd"
+                        />
+                    </svg>
+                </button>
+            </div>
+            <div class="container-timer" id="break-target">
+                <div class="timer-border">
+                    <h3 id="break-value">5</h3>
                 </div>
-                <div class="container-time" id="break-container">
-                    <h2 id="break-timer" data-min="5" data-key="break">5</h2>
-                    <button class="increment" data-target="break-timer">+</button>
-                    <button class="decrement" data-target="break-timer">-</button>
+                <button class="increment" data-key="break">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="icon-btn icon-increment">
+                        <path fill-rule="evenodd"
+                            d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z"
+                            clip-rule="evenodd" />
+                    </svg>
+
+                </button>
+                <button class="decrement" data-key="break"><svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    class="icon-btn icon-decrement"
+                >
+                    <path
+                        fill-rule="evenodd"
+                        d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm3 10.5a.75.75 0 0 0 0-1.5H9a.75.75 0 0 0 0 1.5h6Z"
+                        clip-rule="evenodd"
+                    />
+                </svg>
+</button>
+            </div>
+            <div class="container-timer " id="longBreak-target">
+                <div class="timer-border">
+                    <h3 id="longBreak-value">30</h3>
                 </div>
-                <div class="container-time" id="longBreak-container">
-                    <h2 id="longBreak-timer" data-min="30" data-key="longBreak">30</h2>
-                    <button class="increment" data-target="longBreak-timer">+</button>
-                    <button class="decrement" data-target="longBreak-timer">-</button>
+                <button class="increment" data-key="longBreak">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="icon-btn icon-increment">
+                        <path fill-rule="evenodd"
+                            d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z"
+                            clip-rule="evenodd" />
+                    </svg>
+
+                </button>
+                <button class="decrement" data-key="longBreak">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        class="icon-btn icon-decrement"
+                    >
+                        <path
+                            fill-rule="evenodd"
+                            d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm3 10.5a.75.75 0 0 0 0-1.5H9a.75.75 0 0 0 0 1.5h6Z"
+                            clip-rule="evenodd"
+                        />
+                    </svg>
+
+                </button>
+            </div>
+            <div class="container-timer " id="countdown">
+                <div class="countdown-container">
+                    <h3 id="minutes"></h3>
+                    <span>:</span>
+                    <h3 id="seconds"></h3>
                 </div>
             </div>
-            <div id="container-countdown">
-                <h2 id="minutes"></h2>
-                <h2 id="seconds"></h2>
-            </div>
-
-
 
         </div>
-        <div class="container-start">
 
-            <button id="stop">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                    class="icon-start stop-icon">
-                    <path fill-rule="evenodd"
+        <!-- STARTS AND RESET BUTTONS -->
+         <div class="start-buttons">
+             <button id="pauseBtn">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    class="icon-status"
+                >
+                    <path
+                        fill-rule="evenodd"
                         d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12ZM9 8.25a.75.75 0 0 0-.75.75v6c0 .414.336.75.75.75h.75a.75.75 0 0 0 .75-.75V9a.75.75 0 0 0-.75-.75H9Zm5.25 0a.75.75 0 0 0-.75.75v6c0 .414.336.75.75.75H15a.75.75 0 0 0 .75-.75V9a.75.75 0 0 0-.75-.75h-.75Z"
-                        clip-rule="evenodd" />
+                        clip-rule="evenodd"
+                    />
                 </svg>
-            </button>
-            <button id="play">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                    class="icon-start play-icon">
-                    <path fill-rule="evenodd"
-                        d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm14.024-.983a1.125 1.125 0 0 1 0 1.966l-5.603 3.113A1.125 1.125 0 0 1 9 15.113V8.887c0-.857.921-1.4 1.671-.983l5.603 3.113Z"
-                        clip-rule="evenodd" />
-                </svg>
-            </button>
-            <button id="reset">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                    class="icon-start reset-icon">
-                    <path fill-rule="evenodd"
-                        d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm14.024-.983a1.125 1.125 0 0 1 0 1.966l-5.603 3.113A1.125 1.125 0 0 1 9 15.113V8.887c0-.857.921-1.4 1.671-.983l5.603 3.113Z"
-                        clip-rule="evenodd" />
-                </svg>
-            </button>
+
+
+
+             </button>
+             <button id="startBtn">
+                 <svg
+                     xmlns="http://www.w3.org/2000/svg"
+                     viewBox="0 0 24 24"
+                     fill="currentColor"
+                     class="icon-status icon-play"
+                 >
+                     <path
+                         fill-rule="evenodd"
+                         d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm14.024-.983a1.125 1.125 0 0 1 0 1.966l-5.603 3.113A1.125 1.125 0 0 1 9 15.113V8.887c0-.857.921-1.4 1.671-.983l5.603 3.113Z"
+                         clip-rule="evenodd"
+                     />
+                 </svg>
+
+
+             </button>
+             <button id="resetBtn">
+                 <svg
+                     xmlns="http://www.w3.org/2000/svg"
+                     viewBox="0 0 24 24"
+                     fill="currentColor"
+                     class="icon-status icon-reset"
+                 >
+                     <path
+                         fill-rule="evenodd"
+                         d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm14.024-.983a1.125 1.125 0 0 1 0 1.966l-5.603 3.113A1.125 1.125 0 0 1 9 15.113V8.887c0-.857.921-1.4 1.671-.983l5.603 3.113Z"
+                         clip-rule="evenodd"
+                     />
+                 </svg>
+
+
+             </button>
         </div>
+
+        <!-- Circle Counts -->
+         <div class="circles-container">
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+         </div>
     </main>
     <script src="./assets/main.js"></script>
 </body>
